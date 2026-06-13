@@ -67,37 +67,35 @@ function shuffle(array) {
   return array;
 }
 
-// Build the 30-card deck: a "word" card and an "image" card per pair.
+// Build the 30-card deck: two identical cards (image + word) per pair.
 function buildDeck() {
   const deck = [];
   for (const pair of PAIRS) {
-    deck.push({ id: pair.id, type: "word", word: pair.word });
-    deck.push({ id: pair.id, type: "img",  word: pair.word, img: pair.img });
+    deck.push({ id: pair.id, word: pair.word, img: pair.img });
+    deck.push({ id: pair.id, word: pair.word, img: pair.img });
   }
   return shuffle(deck);
 }
 
-// Create the DOM element for a single card.
+// Create the DOM element for a single card: image on top, word below.
 function createCardEl(card) {
   const el = document.createElement("div");
   el.className = "card";
   el.dataset.id = card.id;
 
-  let frontContent;
-  if (card.type === "word") {
-    frontContent = `<span class="word">${card.word}</span>`;
-  } else {
-    // Image card. If the file is missing, swap in a labeled placeholder.
-    frontContent =
-      `<img src="${card.img}" alt="${card.word}" ` +
-      `onerror="this.replaceWith(Object.assign(document.createElement('div'),` +
-      `{className:'img-placeholder',innerHTML:'<span class=&quot;ph-icon&quot;>🖼️</span><span>${card.word}</span>'}))">`;
-  }
+  // If the image file is missing, swap in a labeled placeholder.
+  const imgHtml =
+    `<img src="${card.img}" alt="${card.word}" ` +
+    `onerror="this.replaceWith(Object.assign(document.createElement('div'),` +
+    `{className:'img-placeholder',innerHTML:'<span class=&quot;ph-icon&quot;>🖼️</span>'}))">`;
 
   el.innerHTML = `
     <div class="card-inner">
       <div class="card-face card-back"></div>
-      <div class="card-face card-front">${frontContent}</div>
+      <div class="card-face card-front">
+        <div class="card-img">${imgHtml}</div>
+        <span class="word">${card.word}</span>
+      </div>
     </div>`;
 
   el.addEventListener("click", () => onCardClick(el));

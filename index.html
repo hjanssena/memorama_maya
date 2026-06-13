@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memorama Maya</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Memorama Maya</h1>
+  </header>
+
+  <main>
+    <div id="board" aria-label="Tablero de memorama"></div>
+  </main>
+
+  <footer id="hud">
+    <div class="counter">
+      <span class="counter-label">Aciertos</span>
+      <span class="counter-value" id="matches">0</span>
+      <span class="counter-total">/ 15</span>
+    </div>
+    <div class="counter">
+      <span class="counter-label">Intentos</span>
+      <span class="counter-value" id="tries">0</span>
+    </div>
+  </footer>
+
+  <!-- Win modal (hidden until all pairs are matched) -->
+  <div id="win-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="win-title">
+    <div class="modal-card">
+      <h2 id="win-title">¡Felicidades! 🎉</h2>
+      <p>Encontraste todos los pares.</p>
+      <p class="modal-stats">Lo lograste en <span id="final-tries">0</span> intentos.</p>
+      <button id="refresh-btn" type="button">Refrescar página</button>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
